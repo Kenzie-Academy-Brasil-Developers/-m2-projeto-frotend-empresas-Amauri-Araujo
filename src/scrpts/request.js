@@ -10,6 +10,21 @@ const requestHeaders={
 }
 
 
+const toast2=(message)=>{
+
+    const body=document.querySelector('body')
+    const container= document.createElement('div')
+    const mensagem=document.createElement('p')
+
+mensagem.innerText=message
+    container.appendChild(mensagem)
+    body.appendChild(container)
+    setTimeout(()=>{
+        body.removeChild(container)
+         },2000)
+     
+}
+
 export const getAllCompanys=async()=>{
     const company= await fetch(`${baseUrl}/companies`,{
         method:'GET',
@@ -77,7 +92,7 @@ export const createNewUser=async(userBody)=>{
             return response.json()
         }else{
             response.json().then(respError=>{
-                alert(`${respError.message}`)
+               console.log(`${respError.message}`)
             })
         }
     })
@@ -103,7 +118,7 @@ try {
         }
     
 } catch (error) {
-    console.log(error)
+    toast2(error)
 }
     
 }
@@ -165,7 +180,7 @@ export const updateProfileUser=async(updateBody)=>{
 
     .then(response=>{
         if(response.ok){
-           alert(`Usuário atualiazdo com sucesso`)
+           return response.json()
         }else{
             response.json().then(error=>{
                 alert(`${error.message}`)
@@ -226,7 +241,7 @@ body: JSON.stringify(departmentBody)
             return response.json()
         }else{
             response.json().then(error=>{
-                console.log(error.message)
+              toast2(error.message)
             })
         }
     })
@@ -244,7 +259,7 @@ headers:requestHeaders
            return
         }else{
             response.json().then(error=>{
-                console.log(error.message)
+                toast2(error.message)
             })
         }
     })
@@ -264,7 +279,7 @@ body:JSON.stringify(departBody)
             return response.json()
         }else{
             response.json().then(error=>{
-                console.log(error.message)
+               toast2(error.message)
             })
         }
     })
@@ -298,10 +313,10 @@ headers:requestHeaders
 
     .then(response=>{
         if(response.ok){
-           return
+          
         }else{
             response.json().then(error=>{
-                console.log(error.message)
+              console.log(error.message)
             })
         }
     })
@@ -366,6 +381,43 @@ body:JSON.stringify(body)
 export const demiteUser=async(id)=>{
     const users= await fetch(`${baseUrl}/departments/dismiss/${id}`,{
 method:"PATCH",
+headers:requestHeaders,
+
+    })
+
+    .then(response=>{
+        if(response.ok){
+            return response.json()
+        }else{
+            response.json().then(error=>{
+                console.log(error.message)
+            })
+        }
+    })
+    return users
+}
+
+export const getdepUser=async()=>{
+    const users= await fetch(`${baseUrl}/users/departments`,{
+method:"GET",
+headers:requestHeaders,
+
+    })
+
+    .then(response=>{
+        if(response.ok){
+            return response.json()
+        }else{
+            response.json().then(error=>{
+                console.log(error.message)
+            })
+        }
+    })
+    return users
+}
+export const getColegas=async()=>{
+    const users= await fetch(`${baseUrl}/users/departments/coworkers`,{
+method:"GET",
 headers:requestHeaders,
 
     })

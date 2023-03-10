@@ -1,4 +1,4 @@
-import { getdepartmentsEmpresas,updateDepartments,dellDepartments,createDepartments,dellUsers,getAllUsers,getAlldepartments,updateUsersLevel,getAllUsersOutOfWork,contrataUser,demiteUser} from "./request.js";
+import { getdepartmentsEmpresas,updateDepartments,dellDepartments,createDepartments,dellUsers,getAllUsers,getAlldepartments,updateUsersLevel,getAllUsersOutOfWork,contrataUser,demiteUser, getAllCompanys} from "./request.js";
 import { renderSelect,renderSelectcria,createAllUsers,createAllDepartments} from "./render.js";
 import { showAdd,showModalUpDep,showModalNewLevel,} from "./modal.js";
 
@@ -25,6 +25,36 @@ logoutAd()
 
 renderSelect()
 
+
+const toast=(message)=>{
+
+    const body=document.querySelector('body')
+    const container= document.createElement('div')
+    const mensagem=document.createElement('p')
+mensagem.innerText=message
+    container.appendChild(mensagem)
+    body.appendChild(container)
+
+    setTimeout(()=>{
+     body.removeChild(container)
+      },2000)
+  
+}
+
+ const toast2=(message)=>{
+
+    const body=document.querySelector('body')
+    const container= document.createElement('div')
+    const mensagem=document.createElement('p')
+mensagem.innerText=message
+    container.appendChild(mensagem)
+    body.appendChild(container)
+    setTimeout(()=>{
+        body.removeChild(container)
+         },2000)
+     
+}
+
 const handleDepartments=()=>{
 const select=document.querySelector('select')
 select.addEventListener('change',async()=>{
@@ -36,17 +66,23 @@ handleDepartments()
 
 const patchDep=async()=>{
     const modal= document.querySelector('#modal__patchDep')
-    const input=document.querySelector('#input__patchDeps')
+    const input=document.querySelector('.input__patchDeps')
     const btn=document.querySelector('#btn__patchDeps')
     const upBody={description:""}
 
+    const iddep= JSON.parse(localStorage.getItem("@btnDepId:idDepartment"));
 
+ 
+    
     
     btn.addEventListener('click',async(e)=>{
         e.preventDefault()
         upBody.description=input.value
         const id= JSON.parse(localStorage.getItem("@btnDepId:idDepartment"));
+        console.log(id)
         const depart= await updateDepartments(id,upBody)
+
+        toast("Departamento Atualizado")
         modal.close()
         renderDepartments(true)
         localStorage.removeItem("@btnDepId:idDepartment")
@@ -60,6 +96,7 @@ patchDep()
         btnDell.addEventListener('click',async()=>{
             const id=btnDell.dataset.delId
             const deletar=await dellDepartments(id)
+            toast('Departamento deletado com sucesso')
             const render= renderDepartments(true)
             modal.close()
         })
@@ -131,7 +168,7 @@ const createmodalTasks=(id,array)=>{
     compay.innerText=department.companies.name
     select.id='select__tasks'
     option.innerText='Selecionar usuário'
-   
+   conteiner.classList.add('divM')
     botaoClose.innerText='X'
     select.appendChild(option)
     containerUser.id='user_contratado'
@@ -158,14 +195,13 @@ btnCont.addEventListener('click',async(e)=>{
     console.log(modal)
     const usuariocontratado= await contrataUser(userBody)
 
-   
-    // window.location.reload()
-    modal.close()
-    // const modalContent= await createmodalTasks(id,await getAlldepartments())
-    // modal.innerHTML=""
-    // modal.appendChild(modalContent)
+    const div= document.querySelector('#user_contratado')
+    
+    div.innerHTML=""
+  
+    toast('Usuário contratado')
  
-
+    renderUserContr(id)
 })
 
 }
@@ -228,19 +264,26 @@ finduser.forEach(user=>{
 const divcontent=createUserContr(user)
     container.append(divcontent)
 })
-    demitirUsuário()
+    demitirUsuário(id)
 }
 
-const demitirUsuário=()=>{
+const demitirUsuário=(id)=>{
 const btnDimmis=document.querySelectorAll('.desliga__user')
 
 const modal=document.querySelector('#tasks__modal')
 btnDimmis.forEach(btn=>{
     btn.addEventListener('click',async()=>{
-        const id=btn.dataset.userIdDimmis
+        const ids=btn.dataset.userIdDimmis
 
-        const demit= await demiteUser(id)
-       modal.close()
+        const demit= await demiteUser(ids)
+        const div= document.querySelector('#user_contratado')
+    
+    div.innerHTML=""
+  
+
+        toast('Usuário demitido =(')
+    renderUserContr(id)
+
     })
 
 })
@@ -337,8 +380,8 @@ const newDep=()=>{
             depBody[name]=value
             depBody.company_uuid=select.value
         })
-            if(count!=0){d
-                alert(`Preencha todos os campos`)
+            if(count!=0){
+                toast2(`Preencha todos os campos`)
 
                 inputs.forEach(input=>{
                     input.addEventListener('keyup',()=>{
@@ -350,14 +393,17 @@ const newDep=()=>{
               
                 const newDep=await createDepartments(depBody)
                 modal.close()
+            
                 const dep=renderDepartments(true)
                 inputs.forEach(input=>{
                     input.value=''
 
                 select.value=""
+
+               
                 })
              }
-   
+             toast('Novo Departamento criado')
 })}
 newDep()
 
@@ -376,7 +422,7 @@ newDep()
             const deletar=await dellUsers(id)
             const render= renderAllUsers()
             modal.close()
-
+toast('Usuário deletado')
            
         })
    
@@ -445,24 +491,35 @@ const renderModalDellUser=(array)=>{
     section.innerHTML=""
 
     const users=await getAllUsers()
-   
-
+    
+    const allDepartments=await getAlldepartments()  
+    
     const filteradmin=users.filter(usu=>{
         const usuariosfilrados= usu = usu.is_admin==false
         return usuariosfilrados
 
     })
 
-    console.log(filteradmin)
-    filteradmin.forEach(user=>{
-        const finalUser= createAllUsers(user)
+ 
+    filteradmin.forEach(async(user)=>{
+        const company=allDepartments.find(comp=>{
+        
+            return comp.uuid == user.department_uuid
+          
+        })
+        console.log(company?.companies?.name)
+        const finalUser= createAllUsers(user,company?.companies?.name)
 
         section.appendChild(finalUser)
     })
 renderModalDellUser(await getAllUsers())
 showModalNewLevel()
+
+
 }
 renderAllUsers()
+
+
 
 const patchUser=()=>{
     const modal= document.querySelector('#modal_newLevel')
@@ -488,6 +545,7 @@ const patchUser=()=>{
        renderAllUsers()
         localStorage.removeItem("@btnUserId:iduser")
     })
+    toast('Nível do usuário atualizado')
 }
 patchUser()
 

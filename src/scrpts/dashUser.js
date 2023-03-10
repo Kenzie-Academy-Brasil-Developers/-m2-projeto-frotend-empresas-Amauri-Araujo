@@ -28,6 +28,20 @@ logout()
 
 renderUser()
 
+const toast=(message)=>{
+
+    const body=document.querySelector('body')
+    const container= document.createElement('div')
+    const mensagem=document.createElement('p')
+    mensagem.innerText=message
+    container.appendChild(mensagem)
+    body.appendChild(container)
+
+    setTimeout(()=>{
+     body.removeChild(container)
+      },2000)
+  
+}
 
 
 export const updateProfile=()=>{
@@ -55,8 +69,10 @@ export const updateProfile=()=>{
       
             const userAtualize=await updateProfileUser(updateBody)
 
-            renderUser()
+           
            modal.close()
+           toast('Informações atualizadas')
+           renderUser()
         }
 
        

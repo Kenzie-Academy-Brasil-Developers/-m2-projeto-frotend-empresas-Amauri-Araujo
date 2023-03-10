@@ -1,3 +1,4 @@
+
 import { createNewUser } from "./request.js";
 
 
@@ -11,6 +12,36 @@ const autentication = async ()=>{
 }
 
 autentication()
+ 
+
+const toast=(message)=>{
+
+    const body=document.querySelector('body')
+    const container= document.createElement('div')
+    const mensagem=document.createElement('p')
+mensagem.innerText=message
+    container.appendChild(mensagem)
+    body.appendChild(container)
+
+    setTimeout(()=>{
+     body.removeChild(container)
+      },2000)
+  
+}
+
+ const toast2=(message)=>{
+
+    const body=document.querySelector('body')
+    const container= document.createElement('div')
+    const mensagem=document.createElement('p')
+mensagem.innerText=message
+    container.appendChild(mensagem)
+    body.appendChild(container)
+    setTimeout(()=>{
+        body.removeChild(container)
+         },2000)
+     
+}
 
 const createUser= ()=>{
 
@@ -38,7 +69,7 @@ const createUser= ()=>{
 
         console.log(userBody)
         if(count!=0){
-            alert(`Por favor preencha todos os campos`)
+            toast2('Por favor preencha todos os campos')
 
             inputs.forEach(input=>{
                 input.addEventListener('keyup',()=>{
@@ -49,7 +80,7 @@ const createUser= ()=>{
 
         }else{
 
-            alert(`Usuário cadastrado com sucesso`)
+            toast("Usuário cadastrado com sucesso")
          
 
             const user= await createNewUser(userBody)
@@ -91,7 +122,7 @@ const backPAge=()=>{
 
     btnVoltar.addEventListener('click',(e)=>{
         e.preventDefault()
-        console.log('oi')
+        
         window.location.replace('../../index.html')
     })
 }

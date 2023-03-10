@@ -10,7 +10,19 @@ const autentication =async ()=>{
 };
 }
 
+const toast2=(message)=>{
 
+    const body=document.querySelector('body')
+    const container= document.createElement('div')
+    const mensagem=document.createElement('p')
+mensagem.innerText=message
+    container.appendChild(mensagem)
+    body.appendChild(container)
+    setTimeout(()=>{
+        body.removeChild(container)
+         },2000)
+     
+}
 
 const login=()=>{
 
@@ -33,7 +45,7 @@ const login=()=>{
          
         })
         if(count!=0){
-            alert(`Por favor preecha todos os campos`)
+           toast2(`Por favor preecha todos os campos`)
 
             inputs.forEach(input=>{
                 input.addEventListener('keyup',()=>{

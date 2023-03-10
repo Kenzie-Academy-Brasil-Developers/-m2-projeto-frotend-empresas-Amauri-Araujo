@@ -1,5 +1,5 @@
-import { getAllCompanys,getProfile,getAllSectors} from "./request.js";
-import { showmodalupdate,showModalUpDep} from "./modal.js";
+import { getAllCompanys,getProfile,getAllSectors,getdepUser,getColegas} from "./request.js";
+import { showmodalupdate} from "./modal.js";
 
 
 const createCompany=(company)=>{
@@ -50,11 +50,19 @@ const createUser=(user)=>{
     const userOcupation=document.createElement('p')
     const btnEditProfile=document.createElement('button')
     
-    username.innerText=user.username
+    username.innerText=(`${user.username[0].toUpperCase()}${user.username.substring(1)}`)
     userEmail.innerText=(`Email: ${user.email}`)
-    userNIvel.innerText=user.professional_level
+    
+   
 
-    userOcupation.innerText=user.kind_of_work
+        userNIvel.innerText=(`${user.professional_level[0].toUpperCase()}${user.professional_level.substring(1)}`)
+
+   
+   
+        userOcupation.innerText=user.kind_of_work
+
+   
+    
     btnEditProfile.innerText='Editar'
     btnEditProfile.id='showUpdate'
     headerUser.append(username,userEmail,userNIvel,userOcupation,btnEditProfile)
@@ -70,39 +78,121 @@ const createUser=(user)=>{
 
     const companyUser=(company)=>{
 
-        const container=document.createElment('div')
+        const container=document.createElement('div')
         const comanyName=document.createElement('h1')
         const departmentName=document.createElement('h1')
+        const traço=document.createElement('p')
+
 
 
         
+        comanyName.innerText=company.name
+
+        departmentName.innerText=""
+
+        departmentName.id='depn'
+        traço.innerText="-"
+        container.append(comanyName,traço,departmentName)
+        return container
+    
+    }
+
+    const createColega=(c)=>{
+const container=document.createElement('div')
+const username=document.createElement( 'h2')
+const nivel=document.createElement('p')
+
+username.innerText=(`${c.username[0].toUpperCase()}${c.username.substring(1)}`)
+
+
+    nivel.innerText=(`${c.professional_level[0].toUpperCase()}${c.professional_level.substring(1)}`)
+
+
+
+container.append(username,nivel)
+
+return container
     }
     export const renderUser= async()=>{
 
         const body=document.querySelector('header')
-        const main=document.querySelector('main')
+       
         body.innerHTML=''
 
         const user=await getProfile()
-        console.log(user.department_uuid)
+       
+        const id=localStorage.setItem('@userDash:id',JSON.stringify(user.uuid))
         const renderDashUser=createUser(user)
-
-        if(user.department_uuid != null){
-
-            console.log('verdadeiro')
-        }else{
-            console.log('falso')
-         
-            main.appendChild(createH1())
-        }
         body.append(renderDashUser)
-
-
-
         showmodalupdate()
+        colegas()
+    }
+
+
+async function colegas(){
+
+    const main=document.querySelector('main')
+    main.innerHTML=""
+    const user=await getProfile()
+           
+        const id=localStorage.setItem('@userDash:id',JSON.stringify(user.uuid))
+    
+    
+            if(user.department_uuid != null){
+                const company= await getdepUser()
+              
+                
+                const companie= companyUser(company)
+                main.appendChild(companie)
+                const departName=document.querySelector("#depn")
+               
+             
+                company.departments.forEach(com=>{
+                    departName.innerText=com.name
+                    
+                })
+    
+                const colegas=await getColegas()
+    
+                for(let i=0;i<colegas.length;i++){
+    
+                    const colega=colegas[i].users
+    
+                    for(let j=0;j<colega.length;j++){
+                        const usuario=  JSON.parse(localStorage.getItem("@userDash:id"));
+                    
+                        const id =colega[j].uuid
+    
+                        if(id!=usuario)
+                        {
+                            
+    
+                            const create= createColega(colega[j])
+                           
+                            main.append(create)
+                        }
+                    }
+                    localStorage.removeItem('@userDash:id')
+                }
+    
+    
+           }
+           
+           else{
+               
+             
+                main.appendChild(createH1())
+            }
+            
+    
+    
+    
+           
+}
+    
 
      
-    }
+    
 
 
    
@@ -199,7 +289,7 @@ export const renderSelectcria= async()=>{
         selectcria.append(department)
     })
 }
-export const createAllUsers= (user)=>{
+export const createAllUsers=(user,compan)=>{
 
     const container=document.createElement('div')
     
@@ -214,18 +304,28 @@ export const createAllUsers= (user)=>{
 
     username.innerText=user.username
     usernivel.innerText=(`${user.professional_level.charAt(0).toUpperCase()}${user.professional_level.slice(1)}`)
-    company.innerText=""
-
+    
+    
+    company.innerText=compan
+    company.classList.add('company__name__user')
+    company.dataset.comId=user.department_uuid
     pathuser.innerText='Atualizar'
     pathuser.classList.add('pathUser')
     deleteUser.innerText='Deletar'
     deleteUser.classList.add('byby_user')
 deleteUser.dataset.delUserId=user.uuid
 pathuser.dataset.pathUserId=user.uuid
-    container.append(username,usernivel,company,pathuser,deleteUser)
+
+if(compan!=undefined){
+
+    container.append(company)
+}
+
+    container.append(username,usernivel,pathuser,deleteUser)
 
     return container
 }
+
 
 // export const renderAllUsers=async()=>{
 //     const section=document.querySelector('section')

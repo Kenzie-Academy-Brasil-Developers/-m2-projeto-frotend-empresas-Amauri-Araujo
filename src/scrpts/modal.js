@@ -1,4 +1,4 @@
-// import {deleteDep,deleteUsuario} from "./dashadmin.js"
+
 
 const closeModalUpdate=()=>{
     const modal=document.querySelector('#modal__update')
@@ -13,7 +13,8 @@ export const showmodalupdate=()=>{
 
     const btnShow=document.querySelector('#showUpdate')
     const modal=document.querySelector('#modal__update')
-    btnShow.addEventListener('click',()=>{
+    btnShow.addEventListener('click',(e)=>{
+
         modal.showModal()
 
 
@@ -29,6 +30,7 @@ const closeModalUpDep=()=>{
     const closeUpdate=document.querySelector('#btn__closeMDep')
 
     closeUpdate.addEventListener('click',()=>{
+
         modal.close()
     })
 }
@@ -39,8 +41,13 @@ export const showModalUpDep=()=>{
    
     btnShow.forEach(btn=>{
    
-        btn.addEventListener('click',()=>{
+        btn.addEventListener('click',(e)=>{
+           const actionValue=e.target.parentNode.children[1].innerText
+            console.log(e)
             modal.showModal()
+            const input=document.querySelector('.input__patchDeps')
+            input.value=actionValue
+
     const idbtn=localStorage.setItem('@btnDepId:idDepartment',JSON.stringify(btn.dataset.depId))
     })
     closeModalUpDep()
@@ -49,53 +56,7 @@ export const showModalUpDep=()=>{
     })
 }
 
-// const createmodalDelete=(id,array)=>{
-//     const conteiner=document.createElement('div')
-//     const titulo=document.createElement('h1')
-//     const botaoClose=document.createElement('button')
-//     const botaoDeletar=document.createElement('button')
 
-
-//     const department=array.find(dep=>{
-//         return(dep.uuid=== id)
-//     })
-//     titulo.innerText=(`Realmente deseja deletar o Departamento ${department.name} e demitir seus funcionários?`)
-//     botaoClose.id='btn__closedele'
-//     botaoDeletar.dataset.delId=department.uuid
-//     botaoDeletar.id='del__dep'
-//     botaoClose.innerText='X'
-//     botaoDeletar.innerText='Confirmar'
-//     conteiner.append(botaoClose,titulo,botaoDeletar)
-//     return conteiner
-// }
-// const closeModalDEl=()=>{
-//     const modal=document.querySelector('#modal__delete')
-//     const btn=document.querySelector('#btn__closedele')
-
-//     btn.addEventListener('click',()=>{
-//         modal.close()
-//     })
-// }
-// export const renderModalDell=(array)=>{
-//     const modal=document.querySelector('#modal__delete')
-//     const btns=document.querySelectorAll('.open__dell')
-
-
-//     btns.forEach(btn=>{
-//         btn.addEventListener('click',()=>{
-//             const modalContent=createmodalDelete(btn.dataset.depDel,array)
-           
-//             modal.innerHTML=""
-//             modal.appendChild(modalContent)
-//             modal.showModal()
-//             closeModalDEl()
-//             // deleteDep()
-    
-//         })
-        
-//     })
- 
-// }
 const closeAD=()=>{
     const modal=document.querySelector('#modal__cria')
     const btn=document.querySelector('#close__cria')
@@ -115,62 +76,6 @@ btn.addEventListener('click',()=>{
 })
 
 }
-
-// const createmodalDeleteUser=(id,array)=>{
-//     const conteiner=document.createElement('div')
-//     const titulo=document.createElement('h1')
-//     const botaoClose=document.createElement('button')
-//     const botaoDeletar=document.createElement('button')
-
-
-//     const user=array.find(us=>{
-//         return(us.uuid=== id)
-//     })
-//     titulo.innerText=(`Realmente deseja remover o usuário ${user.username}?`)
-//     botaoClose.id='btn__closeDelUser'
-//     botaoDeletar.dataset.delUserId=user.uuid
-//     botaoDeletar.id='del__user'
-//     botaoClose.innerText='X'
-//     botaoDeletar.innerText='Deletar'
-//     conteiner.append(botaoClose,titulo,botaoDeletar)
-//     return conteiner
-// }
-
-// const closeModalDElUser=()=>{
-//     const modal=document.querySelector('#modal__delUser')
-//     const btn=document.querySelector('#btn__closeDelUser')
-
-//     btn.addEventListener('click',()=>{
-//         modal.close()
-//     })
-// }
-
-// export const renderModalDellUser=(array)=>{
-//     const modal=document.querySelector('#modal__delUser')
-//     const btns=document.querySelectorAll('.byby_user')
-
-//     btns.forEach(btn=>{
-//         btn.addEventListener('click',()=>{
-//             const modalContent=createmodalDeleteUser(btn.dataset.delUserId,array)
-            
-//             modal.innerHTML=""
-//             modal.appendChild(modalContent)
-//             modal.showModal()
-//             closeModalDElUser()
-          
-        
-
-//             const btnd=document.querySelector('#del__user')
-
-
-//             console.log(btnd)
-          
-//                 })
-//         })
- 
-        
-// }
-
 
 const closeModalNewLevel=()=>{
     
