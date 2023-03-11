@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <link rel="stylesheet" href='../styles/global.css'>
+    <link rel="stylesheet" href="../styles/admin.css">
+</head>
+<body>
+
+
+
+  <header>
+    <img src="../assets/img/Group 42.png" alt="" srcset="">
+    <button id="logout_admin">Logout</button>
+  </header>
+  <div id="div_seleDm">
+    <h1>Departamentos</h1>
+    <select id='admin__select'>
+      <option value="">Selecionar Empresas</option>
+    </select>
+
+    <button id="cirar__dep">Criar</button>
+  </div>
+   
+  <main>
+
+  </main>
+  <div id="usucadst"><h1>Usuários cadastrados</h1></div>
+    <section></section>
+   
+    
+
+    <dialog id="modal__patchDep">
+
+      <div>
+        <button id="btn__closeMDep">X</button>
+        <h1>Editar Departamento</h1>
+        <form>
+
+          <input class="input__patchDeps" value="" name="description">
+
+          <button id="btn__patchDeps">Salvar alterações</button>
+        </form>
+      </div>
+    </dialog>
+
+
+    <dialog id="modal__delete">
+
+    
+    </dialog>
+
+    <dialog id="modal__cria">
+      <div>
+        <button id="close__cria">X</button>
+        <h1>Criar Departamento</h1>
+        <input type="text" class="input__cria" value="" name="name" placeholder="Nome do departamento">
+        <input type="text" class="input__cria" value="" name="description" placeholder="Descrição">
+        <select id="select__cria" name="company_uuid">
+          <option value="">Selecionar Empresa</option>
+        </select>
+        <button id="btn__cria">Criar Departamento</button>
+
+      </div>
+    </dialog>
+
+
+    <dialog id="modal__delUser">
+
+      
+    </dialog>
+
+    
+    <dialog id="modal_newLevel">
+
+      <div>
+          <h1>Editar Usuário</h1>
+          <button id="close_newL">X</button>
+          <form>
+              <select  id="modalidade__trabalho">
+                  <option value="">Selecione a modalidade de trabalho</option>
+                  <option value="home office">Home Office</option>
+                  <option value="presncial">Presencial</option>
+                  <option value="hibrido">Híbrido</option>
+                 
+              </select>
+              <select id="nivel__proficioanl">
+                  <option value="">Selecione o nível profissional</option>
+                  <option value="estágio">Estágio</option>
+                  <option value="júnior">Júnior</option>
+                  <option value="pleno">Pleno</option>
+                  <option value="sênior">Sênior</option>
+              </select>
+      
+              <button id="btn__newLevel">Editar</button>
+  
+          </form>
+        
+      </dialog>
+
+      <dialog id="tasks__modal"></dialog>
+    <script type="module" src="../scrpts/dashadmin.js"></script>
+</body>
+</html>
