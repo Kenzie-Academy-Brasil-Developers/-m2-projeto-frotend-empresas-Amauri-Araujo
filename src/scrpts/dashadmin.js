@@ -31,6 +31,7 @@ const toast=(message)=>{
     const body=document.querySelector('body')
     const container= document.createElement('div')
     const mensagem=document.createElement('p')
+    container.classList.add('toast__verde')
 mensagem.innerText=message
     container.appendChild(mensagem)
     body.appendChild(container)
@@ -47,6 +48,7 @@ mensagem.innerText=message
     const container= document.createElement('div')
     const mensagem=document.createElement('p')
 mensagem.innerText=message
+container.classList.add('toast')
     container.appendChild(mensagem)
     body.appendChild(container)
     setTimeout(()=>{
@@ -154,12 +156,13 @@ const createmodalTasks=(id,array)=>{
     const compay=document.createElement('p')
     const select=document.createElement('select')
     const option=document.createElement('option')
-    const containerUser=document.createElement('div')
+    const containerUser=document.createElement('ul')
     const btnContratar=document.createElement('button')
     const form=document.createElement('form')
     const department=array.find(dep=>{
         return(dep.uuid=== id)
     })
+    const sect=document.createElement('section')
     titulo.innerText=department.name
     btnContratar.innerText='Contratar'
     btnContratar.id='contratar'
@@ -173,9 +176,10 @@ const createmodalTasks=(id,array)=>{
     select.appendChild(option)
     containerUser.id='user_contratado'
    
-
+    sect.id='sect'
     form.append(select,btnContratar)
-    conteiner.append(botaoClose,titulo,description,compay,form,containerUser)
+    sect.append(containerUser)
+    conteiner.append(botaoClose,titulo,description,compay,form,sect)
     return conteiner
 }
 
@@ -227,20 +231,34 @@ const createselecttask=(option)=>{
     return options
     
 }
-const createUserContr=(user)=>{
+const createUserContr=(user,company)=>{
 
-    const card=document.createElement('div')
+    const card=document.createElement('li')
     const nivel=document.createElement('p')
    const name=document.createElement('h1')
     const btn=document.createElement('button')
+const companyName=document.createElement('p')
 
-
+companyName.innerText=company
+    card.id='card'
     btn.innerText="Desligar"
     btn.dataset.userIdDimmis=user.uuid
     btn.classList.add('desliga__user')
     name.innerText=user.username
     nivel.innerText=(`${user.professional_level.charAt(0).toUpperCase()}${user.professional_level.slice(1)}`)
-    card.append(name,nivel,btn)
+    
+
+card.appendChild(name)
+
+    if(company!=undefined){
+
+        card.append(companyName)
+    }
+    
+    // card.append(name,nivel,btn)
+card.appendChild(nivel)
+card.appendChild(btn)
+
     return card
  
 }
@@ -249,7 +267,7 @@ const renderUserContr=async(id)=>{
 const container=document.querySelector('#user_contratado')
 const users= await getAllUsers()
 
-
+const allDepartments=await getAlldepartments()
 
 const finduser=users.filter(user=>{
 const userfound=user.department_uuid==id
@@ -257,16 +275,28 @@ return userfound
 })
 
 
+ finduser.forEach(async(user)=>{
+    const company=allDepartments.find(comp=>{
+        
+        return comp.uuid == user.department_uuid
+        
+    })
+    console.log(company?.companies?.name)
+    const divcontent=createUserContr(user,company?.companies?.name)
+    container.append(divcontent)
 
-finduser.forEach(user=>{
+})
+   
+
+// finduser.forEach(user=>{
 
  
-const divcontent=createUserContr(user)
-    container.append(divcontent)
-})
+// const divcontent=createUserContr(user)
+//     container.append(divcontent)
+// })
     demitirUsuário(id)
 }
-
+ 
 const demitirUsuário=(id)=>{
 const btnDimmis=document.querySelectorAll('.desliga__user')
 
@@ -507,14 +537,14 @@ const renderModalDellUser=(array)=>{
             return comp.uuid == user.department_uuid
           
         })
-        console.log(company?.companies?.name)
+
         const finalUser= createAllUsers(user,company?.companies?.name)
 
         section.appendChild(finalUser)
     })
 renderModalDellUser(await getAllUsers())
 showModalNewLevel()
-
+patchUser()
 
 }
 renderAllUsers()
@@ -544,10 +574,11 @@ const patchUser=()=>{
         modal.close()
        renderAllUsers()
         localStorage.removeItem("@btnUserId:iduser")
+        toast('Nível do usuário atualizado')
     })
-    toast('Nível do usuário atualizado')
+    
 }
-patchUser()
+
 
 
 

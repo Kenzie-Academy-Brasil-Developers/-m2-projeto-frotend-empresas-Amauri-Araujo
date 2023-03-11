@@ -20,6 +20,8 @@ const toast=(message)=>{
     const container= document.createElement('div')
     const mensagem=document.createElement('p')
 mensagem.innerText=message
+
+container.classList.add('toast__verde')
     container.appendChild(mensagem)
     body.appendChild(container)
 
@@ -35,6 +37,8 @@ mensagem.innerText=message
     const container= document.createElement('div')
     const mensagem=document.createElement('p')
 mensagem.innerText=message
+
+container.classList.add('toast')
     container.appendChild(mensagem)
     body.appendChild(container)
     setTimeout(()=>{

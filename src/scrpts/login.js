@@ -15,6 +15,8 @@ const toast2=(message)=>{
     const body=document.querySelector('body')
     const container= document.createElement('div')
     const mensagem=document.createElement('p')
+
+    container.classList.add('toast')
 mensagem.innerText=message
     container.appendChild(mensagem)
     body.appendChild(container)

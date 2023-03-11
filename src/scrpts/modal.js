@@ -43,7 +43,7 @@ export const showModalUpDep=()=>{
    
         btn.addEventListener('click',(e)=>{
            const actionValue=e.target.parentNode.children[1].innerText
-            console.log(e)
+            console.log(actionValue)
             modal.showModal()
             const input=document.querySelector('.input__patchDeps')
             input.value=actionValue

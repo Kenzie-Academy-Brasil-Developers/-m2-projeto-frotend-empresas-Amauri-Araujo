@@ -11,7 +11,7 @@ const createCompany=(company)=>{
     companiesName.innerText= company.name
     companiesHour.innerText=company.opening_hours
     companiesSectror.innerText=company.sectors.description
-
+companiesSectror.id='companiesSector'
     companiesContainer.append(companiesName,companiesHour,companiesSectror)
 
     return companiesContainer
@@ -49,11 +49,14 @@ const createUser=(user)=>{
     const userNIvel=document.createElement('p')
     const userOcupation=document.createElement('p')
     const btnEditProfile=document.createElement('button')
-    
+    const imgbutton= document.createElement('img')
+
+    const div=document.createElement('div')
+
     username.innerText=(`${user.username[0].toUpperCase()}${user.username.substring(1)}`)
     userEmail.innerText=(`Email: ${user.email}`)
     
-   
+   div.append(username,userEmail)
 
         userNIvel.innerText=(`${user.professional_level[0].toUpperCase()}${user.professional_level.substring(1)}`)
 
@@ -62,10 +65,12 @@ const createUser=(user)=>{
         userOcupation.innerText=user.kind_of_work
 
    
-    
-    btnEditProfile.innerText='Editar'
+    headerUser.id='hU'
+   imgbutton.src='../assets/img/Vector.svg'
+
+   btnEditProfile.appendChild(imgbutton)
     btnEditProfile.id='showUpdate'
-    headerUser.append(username,userEmail,userNIvel,userOcupation,btnEditProfile)
+    headerUser.append(div,userNIvel,userOcupation,btnEditProfile)
     
     return headerUser
     }
@@ -73,6 +78,7 @@ const createUser=(user)=>{
 
         const h1=document.createElement('h1') 
         h1.innerText=' Você ainda não foi contratado'
+        h1.id="naocontratado"
         return h1
     }
 
@@ -84,7 +90,7 @@ const createUser=(user)=>{
         const traço=document.createElement('p')
 
 
-
+        container.id='company_dash'
         
         comanyName.innerText=company.name
 
@@ -107,7 +113,7 @@ username.innerText=(`${c.username[0].toUpperCase()}${c.username.substring(1)}`)
 
     nivel.innerText=(`${c.professional_level[0].toUpperCase()}${c.professional_level.substring(1)}`)
 
-
+container.id='div__colega'
 
 container.append(username,nivel)
 
@@ -205,20 +211,31 @@ async function colegas(){
         const edi=document.createElement('button')
         const del=document.createElement('button')
         const  shollModal=document.createElement('button')
-
+        const container=document.createElement('div')
        
         shollModal.dataset.depId=department.uuid
-        shollModal.innerText='ShollModal'
+    
+        const imgShol=document.createElement('img')
+        const imged=document.createElement('img')
+        const imgdel=document.createElement('img')
+        imgShol.src='../assets/img/Vector (2).svg'
+        imged.src='../assets/img/Vector (1).svg' 
+        imgdel.src='../assets/img/Vector (3).svg'
+        
+    shollModal.appendChild(imgShol)
         name.innerText=department.name
         description.innerText=department.description
         company.innerText=department.companies.name
         edi.innerText='editar'
+
         edi.classList.add('openMDep')
         edi.dataset.depId=department.uuid
-        del.innerText='del'
+       del.appendChild(imgdel)
         del.classList.add('open__dell')
         del.dataset.depDel=department.uuid
         shollModal.classList.add('sholl__modal')
+
+      
         containeirDepartment.append(name,description,company,shollModal,edi,del)
 
         return containeirDepartment
@@ -298,48 +315,40 @@ export const createAllUsers=(user,compan)=>{
     const company=document.createElement('p')
     const pathuser=document.createElement('button')
     const deleteUser=document.createElement('button')
+    const imgedi=document.createElement('img')
 
-
+    const imgedel=document.createElement('img')
 
 
     username.innerText=user.username
     usernivel.innerText=(`${user.professional_level.charAt(0).toUpperCase()}${user.professional_level.slice(1)}`)
     
-    
+    imgedi.src='../assets/img/Vector.svg' 
+        
+    imgedel.src='../assets/img/Vector (3).svg'
+pathuser.appendChild(imgedi)
+deleteUser.appendChild(imgedel)
+
     company.innerText=compan
     company.classList.add('company__name__user')
     company.dataset.comId=user.department_uuid
-    pathuser.innerText='Atualizar'
+ 
     pathuser.classList.add('pathUser')
-    deleteUser.innerText='Deletar'
+
     deleteUser.classList.add('byby_user')
 deleteUser.dataset.delUserId=user.uuid
 pathuser.dataset.pathUserId=user.uuid
 
-if(compan!=undefined){
-
-    container.append(company)
-}
 
     container.append(username,usernivel,pathuser,deleteUser)
+    if(compan!=undefined){
 
+        container.append(company)
+    }
+    
     return container
 }
 
 
-// export const renderAllUsers=async()=>{
-//     const section=document.querySelector('section')
 
-//     section.innerHTML=""
-
-//     const users=await getAllUsers()
-
-//     users.forEach(user=>{
-//         const finalUser= createAllUsers(user)
-
-//         section.appendChild(finalUser)
-//     })
-// // renderModalDellUser(await getAllUsers())
-
-// }
 
