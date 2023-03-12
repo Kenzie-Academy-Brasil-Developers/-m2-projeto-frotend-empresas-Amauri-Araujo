@@ -544,7 +544,7 @@ const renderModalDellUser=(array)=>{
     })
 renderModalDellUser(await getAllUsers())
 showModalNewLevel()
-patchUser()
+
 
 }
 renderAllUsers()
@@ -581,4 +581,4 @@ const patchUser=()=>{
 
 
 
-
+patchUser()
