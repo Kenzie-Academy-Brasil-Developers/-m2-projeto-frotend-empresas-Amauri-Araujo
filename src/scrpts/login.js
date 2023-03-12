@@ -102,3 +102,18 @@ const pages=()=>{
 }
 pages()
 
+
+const heandleHamburgerIndex=()=>{
+    const hamburger=document.querySelector("#hamburger__login")
+    
+    const btn1=document.querySelector('#backtohome')
+    const btn2=document.querySelector('#btf')
+    
+    hamburger.addEventListener('click',()=>{
+    btn1.classList.toggle('hide')
+    btn2.classList.toggle('hide')
+    
+    })
+    
+    }
+    heandleHamburgerIndex()

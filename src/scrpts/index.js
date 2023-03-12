@@ -33,3 +33,18 @@ const mudarPages=()=>{
     })
 }
 mudarPages()
+
+const heandleHamburgerIndex=()=>{
+const hamburger=document.querySelector("#hamburger__home")
+const select=document.querySelector('#select__home')
+const btn1=document.querySelector('#cadastro__page')
+const btn2=document.querySelector('#login__page')
+
+hamburger.addEventListener('click',()=>{
+btn1.classList.toggle('hide')
+btn2.classList.toggle('hide')
+select.classList.toggle('hide')
+})
+
+}
+heandleHamburgerIndex()

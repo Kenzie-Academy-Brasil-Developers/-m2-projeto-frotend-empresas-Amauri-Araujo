@@ -1,13 +1,133 @@
-@media(min-width:900px){
+.hide{
+    display: none;
+   
+
+}
+
+header{
+ 
+    width: 100%;
+    max-width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 2pxs solid  #F8F8F8;
+}
+
+main{
+    background-image: url('../assets/img/Rectangle 6.svg');
+    background-size:cover;
+    background-repeat: no-repeat;
+
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    margin-top: 40px;
+}
+
+form{
+
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    justify-content: space-around;
+  
+
+    display: flex;
+    align-items: center;
+  
+
+    height: 489px;
+    background-color: #FFFFFF;
+    opacity: 95%;
+    padding: 10px 32px;
+
+   
+}
+
+form>button{
+    width:340px;
+    height: 62px;
+    background-color:#4200FF;
+    border: 1px solid #4200FF;
+    padding: 5px 10px;
+    font-size: 400;
+    font-size: 18px;
+    color :#FFFFFF;
+    padding: 5px 10px;
+}
+header>button{
+    width: 142px;
+    height: 48px;
+    background-color: #4200FF;
+    color: #FFFFFF;
+    border: #4200FF 1px solid;
+    font-size: 18px;
+    font-weight: 600;
+}
+#btn__retornar{
+    background-color:white;
+    color: #4200FF;
+}
+
+form>input{
+    width:324px;
+    height: 52px;
+    background-color: #FFFFFF;
+    border: 1px solid #00000033;
+    padding: 5px 10px;
+    font-size: 400;
+    font-size: 18px;
+    color:#00000080;
+    outline: none;
+}
+form>h1{
+    font-size: 30px;
+    font-weight: 700;
+    color:black;
+    align-self: self-start;
+    
+    }
+select{
+
+    width:342px;
+    height: 62px;
+    background-color: #FFFFFF;
+    border: 1px solid #00000033;
+    padding: 5px 10px;
+    font-size: 400;
+    font-size: 18px;
+    color:#00000080;
+    outline: none;
+}
+#home{
+    background-color: #FFFFFF;
+    color: #4200FF;
+    position: absolute;
+    top:60px;
+    
+}
+#login{
+    position: absolute;
+    top:60px;
+    right: 15px;
+
+}
+
+
+@media(min-width:800px){
     body{
        
        align-items: center;
        display: flex;
-        justify-content:space-between;
+     
        flex-direction: column;
         margin: 0 auto;
-        background-image: url('../assets/img/Rectangle 7.svg');
-        background-size:cover;
+      
     }
    header{
         height:80px;
@@ -20,6 +140,26 @@
         padding: 20px 150px;
         border-bottom: 3px  #F8F8F8 solid
         
+    }
+
+    #home{
+        background-color: #FFFFFF;
+        color: #4200FF;
+        position: absolute;
+        top:20px;
+        right: 350px;
+        display: block;
+
+    }
+
+    #hamburger__cad{
+        display: none;
+    }
+    #login{
+        position: absolute;
+        top:20px;
+        right: 150px;
+        display: block;
     }
     header>button{
         width: 142px;
@@ -40,12 +180,12 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 800PX;
+    
     
         position:relative;
        
         background-image: url('../assets/img/Rectangle 7.svg');
-        background-size:contain;
+        background-size:cover;
      
     
 

@@ -131,3 +131,18 @@ const backPAge=()=>{
     })
 }
 backPAge()
+
+const heandleHamburgerIndex=()=>{
+    const hamburger=document.querySelector("#hamburger__cad")
+    
+    const btn1=document.querySelector('#home')
+    const btn2=document.querySelector('#login')
+    
+    hamburger.addEventListener('click',()=>{
+    btn1.classList.toggle('hide')
+    btn2.classList.toggle('hide')
+    
+    })
+    
+    }
+    heandleHamburgerIndex()
